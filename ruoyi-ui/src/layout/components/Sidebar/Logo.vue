@@ -35,8 +35,8 @@ export default {
   },
   data() {
     return {
-      title: '若依管理系统',
-      logo: logoImg
+      title: '应急联动管理系统',
+      // logo: ,
     }
   }
 }
