@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.OrEventMapper">
+    
+    <resultMap type="OrEvent" id="OrEventResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="specific"    column="specific"    />
+        <result property="position"    column="position"    />
+        <result property="content"    column="content"    />
+        <result property="submissionTime"    column="submission_time"    />
+        <result property="incidentTime"    column="incident_time"    />
+        <result property="injured"    column="injured"    />
+        <result property="dead"    column="dead"    />
+        <result property="economic"    column="economic"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="img"    column="img"    />
+        <result property="status"    column="status"    />
+        <result property="urgency"    column="urgency"    />
+        <result property="influence"    column="influence"    />
+    </resultMap>
+
+    <sql id="selectOrEventVo">
+        select id, type, specific, position, content, submission_time, incident_time, injured, dead, economic, remarks, img, status, urgency, influence from or_event
+    </sql>
+
+    <select id="selectOrEventList" parameterType="OrEvent" resultMap="OrEventResult">
+        <include refid="selectOrEventVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="specific != null  and specific != ''"> and specific = #{specific}</if>
+            <if test="position != null  and position != ''"> and position = #{position}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="submissionTime != null "> and submission_time = #{submissionTime}</if>
+            <if test="incidentTime != null "> and incident_time = #{incidentTime}</if>
+            <if test="injured != null "> and injured = #{injured}</if>
+            <if test="dead != null "> and dead = #{dead}</if>
+            <if test="economic != null "> and economic = #{economic}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="img != null  and img != ''"> and img = #{img}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="urgency != null  and urgency != ''"> and urgency = #{urgency}</if>
+            <if test="influence != null  and influence != ''"> and influence = #{influence}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrEventById" parameterType="Long" resultMap="OrEventResult">
+        <include refid="selectOrEventVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrEvent" parameterType="OrEvent">
+        insert into or_event
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="type != null">type,</if>
+            <if test="specific != null">specific,</if>
+            <if test="position != null">position,</if>
+            <if test="content != null">content,</if>
+            <if test="submissionTime != null">submission_time,</if>
+            <if test="incidentTime != null">incident_time,</if>
+            <if test="injured != null">injured,</if>
+            <if test="dead != null">dead,</if>
+            <if test="economic != null">economic,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="img != null">img,</if>
+            <if test="status != null">status,</if>
+            <if test="urgency != null">urgency,</if>
+            <if test="influence != null">influence,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="type != null">#{type},</if>
+            <if test="specific != null">#{specific},</if>
+            <if test="position != null">#{position},</if>
+            <if test="content != null">#{content},</if>
+            <if test="submissionTime != null">#{submissionTime},</if>
+            <if test="incidentTime != null">#{incidentTime},</if>
+            <if test="injured != null">#{injured},</if>
+            <if test="dead != null">#{dead},</if>
+            <if test="economic != null">#{economic},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="img != null">#{img},</if>
+            <if test="status != null">#{status},</if>
+            <if test="urgency != null">#{urgency},</if>
+            <if test="influence != null">#{influence},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrEvent" parameterType="OrEvent">
+        update or_event
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="specific != null">specific = #{specific},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="submissionTime != null">submission_time = #{submissionTime},</if>
+            <if test="incidentTime != null">incident_time = #{incidentTime},</if>
+            <if test="injured != null">injured = #{injured},</if>
+            <if test="dead != null">dead = #{dead},</if>
+            <if test="economic != null">economic = #{economic},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="img != null">img = #{img},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="urgency != null">urgency = #{urgency},</if>
+            <if test="influence != null">influence = #{influence},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrEventById" parameterType="Long">
+        delete from or_event where id = #{id}
+    </delete>
+
+    <delete id="deleteOrEventByIds" parameterType="String">
+        delete from or_event where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
