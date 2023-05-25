@@ -1,19 +1,18 @@
-package com.ruoyi.system.service.impl;
+package com.ruoyi.web.controller.organization.service.impl;
 
 import java.util.List;
 
-import com.ruoyi.system.domain.OrEvent;
-import com.ruoyi.system.mapper.OrEventMapper;
-import com.ruoyi.system.service.IOrEventService;
+import com.ruoyi.web.controller.organization.domain.OrEvent;
+import com.ruoyi.web.controller.organization.mapper.OrEventMapper;
+import com.ruoyi.web.controller.organization.service.IOrEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 /**
  * 应急事件Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-05-23
+ * @date 2023-05-25
  */
 @Service
 public class OrEventServiceImpl implements IOrEventService

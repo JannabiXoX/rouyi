@@ -1,17 +1,25 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="具体事件" prop="specific">
+      <el-form-item label="具体事件" prop="specificEvent">
         <el-input
-          v-model="queryParams.specific"
+          v-model="queryParams.specificEvent"
           placeholder="请输入具体事件"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发生位置" prop="position">
+      <el-form-item label="事件类型" prop="eventType">
         <el-input
-          v-model="queryParams.position"
+          v-model="queryParams.eventType"
+          placeholder="请输入事件类型"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="发生位置" prop="eventPosition">
+        <el-input
+          v-model="queryParams.eventPosition"
           placeholder="请输入发生位置"
           clearable
           @keyup.enter.native="handleQuery"
@@ -19,31 +27,31 @@
       </el-form-item>
       <el-form-item label="上报时间" prop="submissionTime">
         <el-date-picker clearable
-          v-model="queryParams.submissionTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择上报时间">
+                        v-model="queryParams.submissionTime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="请选择上报时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="发生时间" prop="incidentTime">
         <el-date-picker clearable
-          v-model="queryParams.incidentTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择发生时间">
+                        v-model="queryParams.incidentTime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="请选择发生时间">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="受伤人数" prop="injured">
+      <el-form-item label="受伤人数" prop="injuredPerson">
         <el-input
-          v-model="queryParams.injured"
+          v-model="queryParams.injuredPerson"
           placeholder="请输入受伤人数"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="死亡人数" prop="dead">
+      <el-form-item label="死亡人数" prop="deadPerson">
         <el-input
-          v-model="queryParams.dead"
+          v-model="queryParams.deadPerson"
           placeholder="请输入死亡人数"
           clearable
           @keyup.enter.native="handleQuery"
@@ -65,13 +73,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="现场图片" prop="img">
-        <el-input
-          v-model="queryParams.img"
-          placeholder="请输入现场图片"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="事件状态" prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择事件状态" clearable>
+          <el-option
+            v-for="dict in dict.type.sys_job_status"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="紧急程度" prop="urgency">
         <el-input
@@ -144,29 +154,37 @@
     <el-table v-loading="loading" :data="eventList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="事件编号" align="center" prop="id" />
-      <el-table-column label="事件类型" align="center" prop="type" />
-      <el-table-column label="具体事件" align="center" prop="specific" />
-      <el-table-column label="发生位置" align="center" prop="position" />
-      <el-table-column label="事件内容" align="center" prop="content" />
+      <el-table-column label="事件类型" align="center" prop="eventType" />
+      <el-table-column label="具体事件" align="center" prop="specificEvent" />
+      <el-table-column label="发生位置" align="center" prop="eventPosition" />
+      <el-table-column label="事件内容" align="center" prop="eventContent" />
       <el-table-column label="上报时间" align="center" prop="submissionTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.submissionTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.submissionTime, '{y}-{m}-{d} {h}:{m}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="发生时间" align="center" prop="incidentTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.incidentTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.incidentTime, '{y}-{m}-{d} {h}:{m}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="受伤人数" align="center" prop="injured" />
-      <el-table-column label="死亡人数" align="center" prop="dead" />
+      <el-table-column label="受伤人数" align="center" prop="injuredPerson" />
+      <el-table-column label="死亡人数" align="center" prop="deadPerson" />
       <el-table-column label="经济损失" align="center" prop="economic" />
       <el-table-column label="备注" align="center" prop="remarks" />
-      <el-table-column label="现场图片" align="center" prop="img" />
-      <el-table-column label="状态" align="center" prop="status" />
+      <el-table-column label="现场图片" align="center" prop="img" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.img" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="事件状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.sys_job_status" :value="scope.row.status"/>
+        </template>
+      </el-table-column>
       <el-table-column label="紧急程度" align="center" prop="urgency" />
       <el-table-column label="影响范围" align="center" prop="influence" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -197,36 +215,39 @@
     <!-- 添加或修改应急事件对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="具体事件" prop="specific">
-          <el-input v-model="form.specific" placeholder="请输入具体事件" />
+        <el-form-item label="具体事件" prop="specificEvent">
+          <el-input v-model="form.specificEvent" placeholder="请输入具体事件" />
         </el-form-item>
-        <el-form-item label="发生位置" prop="position">
-          <el-input v-model="form.position" placeholder="请输入发生位置" />
+        <el-form-item label="事件类型" prop="eventType">
+          <el-input v-model="form.eventType" placeholder="请输入事件类型" />
         </el-form-item>
-        <el-form-item label="事件内容">
-          <editor v-model="form.content" :min-height="192"/>
+        <el-form-item label="发生位置" prop="eventPosition">
+          <el-input v-model="form.eventPosition" placeholder="请输入发生位置" />
+        </el-form-item>
+        <el-form-item label="事件内容" prop="eventContent">
+          <el-input v-model="form.eventContent" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="上报时间" prop="submissionTime">
           <el-date-picker clearable
-            v-model="form.submissionTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择上报时间">
+                          v-model="form.submissionTime"
+                          type="datetime"
+                          value-format="yyyy-MM-dd HH:mm:ss"
+                          placeholder="请选择上报时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="发生时间" prop="incidentTime">
           <el-date-picker clearable
-            v-model="form.incidentTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择发生时间">
+                          v-model="form.incidentTime"
+                          type="datetime"
+                          value-format="yyyy-MM-dd HH:mm:ss"
+                          placeholder="请选择发生时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="受伤人数" prop="injured">
-          <el-input v-model="form.injured" placeholder="请输入受伤人数" />
+        <el-form-item label="受伤人数" prop="injuredPerson">
+          <el-input v-model="form.injuredPerson" placeholder="请输入受伤人数" />
         </el-form-item>
-        <el-form-item label="死亡人数" prop="dead">
-          <el-input v-model="form.dead" placeholder="请输入死亡人数" />
+        <el-form-item label="死亡人数" prop="deadPerson">
+          <el-input v-model="form.deadPerson" placeholder="请输入死亡人数" />
         </el-form-item>
         <el-form-item label="经济损失" prop="economic">
           <el-input v-model="form.economic" placeholder="请输入经济损失" />
@@ -235,7 +256,17 @@
           <el-input v-model="form.remarks" placeholder="请输入备注" />
         </el-form-item>
         <el-form-item label="现场图片" prop="img">
-          <el-input v-model="form.img" placeholder="请输入现场图片" />
+          <image-upload v-model="form.img"/>
+        </el-form-item>
+        <el-form-item label="事件状态" prop="status">
+          <el-select v-model="form.status" placeholder="请选择事件状态">
+            <el-option
+              v-for="dict in dict.type.sys_job_status"
+              :key="dict.value"
+              :label="dict.label"
+              :value="parseInt(dict.value)"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="紧急程度" prop="urgency">
           <el-input v-model="form.urgency" placeholder="请输入紧急程度" />
@@ -257,6 +288,7 @@ import { listEvent, getEvent, delEvent, addEvent, updateEvent } from "@/api/orga
 
 export default {
   name: "Event",
+  dicts: ['sys_job_status'],
   data() {
     return {
       // 遮罩层
@@ -281,14 +313,14 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        type: null,
-        specific: null,
-        position: null,
-        content: null,
+        eventType: null,
+        specificEvent: null,
+        eventPosition: null,
+        eventContent: null,
         submissionTime: null,
         incidentTime: null,
-        injured: null,
-        dead: null,
+        injuredPerson: null,
+        deadPerson: null,
         economic: null,
         remarks: null,
         img: null,
@@ -325,14 +357,14 @@ export default {
     reset() {
       this.form = {
         id: null,
-        type: null,
-        specific: null,
-        position: null,
-        content: null,
+        eventType: null,
+        specificEvent: null,
+        eventPosition: null,
+        eventContent: null,
         submissionTime: null,
         incidentTime: null,
-        injured: null,
-        dead: null,
+        injuredPerson: null,
+        deadPerson: null,
         economic: null,
         remarks: null,
         img: null,

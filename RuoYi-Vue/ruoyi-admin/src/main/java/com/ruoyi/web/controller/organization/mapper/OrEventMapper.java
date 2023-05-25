@@ -1,15 +1,13 @@
-package com.ruoyi.system.mapper;
-
-import com.ruoyi.system.domain.OrEvent;
+package com.ruoyi.web.controller.organization.mapper;
 
 import java.util.List;
-
+import com.ruoyi.web.controller.organization.domain.OrEvent;
 
 /**
  * 应急事件Mapper接口
  * 
  * @author ruoyi
- * @date 2023-05-23
+ * @date 2023-05-25
  */
 public interface OrEventMapper 
 {

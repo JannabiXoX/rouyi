@@ -2,18 +2,18 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.system.mapper.OrEventMapper">
+<mapper namespace="com.ruoyi.web.controller.organization.mapper.OrEventMapper">
     
     <resultMap type="OrEvent" id="OrEventResult">
         <result property="id"    column="id"    />
-        <result property="type"    column="type"    />
-        <result property="specific"    column="specific"    />
-        <result property="position"    column="position"    />
-        <result property="content"    column="content"    />
+        <result property="eventType"    column="event_type"    />
+        <result property="specificEvent"    column="specific_event"    />
+        <result property="eventPosition"    column="event_position"    />
+        <result property="eventContent"    column="event_content"    />
         <result property="submissionTime"    column="submission_time"    />
         <result property="incidentTime"    column="incident_time"    />
-        <result property="injured"    column="injured"    />
-        <result property="dead"    column="dead"    />
+        <result property="injuredPerson"    column="injured_person"    />
+        <result property="deadPerson"    column="dead_person"    />
         <result property="economic"    column="economic"    />
         <result property="remarks"    column="remarks"    />
         <result property="img"    column="img"    />
@@ -23,20 +23,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectOrEventVo">
-        select id, type, specific, position, content, submission_time, incident_time, injured, dead, economic, remarks, img, status, urgency, influence from or_event
+        select id, event_type, specific_event, event_position, event_content, submission_time, incident_time, injured_person, dead_person, economic, remarks, img, status, urgency, influence from or_event
     </sql>
 
     <select id="selectOrEventList" parameterType="OrEvent" resultMap="OrEventResult">
         <include refid="selectOrEventVo"/>
         <where>  
-            <if test="type != null  and type != ''"> and type = #{type}</if>
-            <if test="specific != null  and specific != ''"> and specific = #{specific}</if>
-            <if test="position != null  and position != ''"> and position = #{position}</if>
-            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="eventType != null  and eventType != ''"> and event_type = #{eventType}</if>
+            <if test="specificEvent != null  and specificEvent != ''"> and specific_event = #{specificEvent}</if>
+            <if test="eventPosition != null  and eventPosition != ''"> and event_position = #{eventPosition}</if>
+            <if test="eventContent != null  and eventContent != ''"> and event_content = #{eventContent}</if>
             <if test="submissionTime != null "> and submission_time = #{submissionTime}</if>
             <if test="incidentTime != null "> and incident_time = #{incidentTime}</if>
-            <if test="injured != null "> and injured = #{injured}</if>
-            <if test="dead != null "> and dead = #{dead}</if>
+            <if test="injuredPerson != null "> and injured_person = #{injuredPerson}</if>
+            <if test="deadPerson != null "> and dead_person = #{deadPerson}</if>
             <if test="economic != null "> and economic = #{economic}</if>
             <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
             <if test="img != null  and img != ''"> and img = #{img}</if>
@@ -55,14 +55,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into or_event
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
-            <if test="type != null">type,</if>
-            <if test="specific != null">specific,</if>
-            <if test="position != null">position,</if>
-            <if test="content != null">content,</if>
+            <if test="eventType != null">event_type,</if>
+            <if test="specificEvent != null">specific_event,</if>
+            <if test="eventPosition != null">event_position,</if>
+            <if test="eventContent != null">event_content,</if>
             <if test="submissionTime != null">submission_time,</if>
             <if test="incidentTime != null">incident_time,</if>
-            <if test="injured != null">injured,</if>
-            <if test="dead != null">dead,</if>
+            <if test="injuredPerson != null">injured_person,</if>
+            <if test="deadPerson != null">dead_person,</if>
             <if test="economic != null">economic,</if>
             <if test="remarks != null">remarks,</if>
             <if test="img != null">img,</if>
@@ -72,14 +72,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
-            <if test="type != null">#{type},</if>
-            <if test="specific != null">#{specific},</if>
-            <if test="position != null">#{position},</if>
-            <if test="content != null">#{content},</if>
+            <if test="eventType != null">#{eventType},</if>
+            <if test="specificEvent != null">#{specificEvent},</if>
+            <if test="eventPosition != null">#{eventPosition},</if>
+            <if test="eventContent != null">#{eventContent},</if>
             <if test="submissionTime != null">#{submissionTime},</if>
             <if test="incidentTime != null">#{incidentTime},</if>
-            <if test="injured != null">#{injured},</if>
-            <if test="dead != null">#{dead},</if>
+            <if test="injuredPerson != null">#{injuredPerson},</if>
+            <if test="deadPerson != null">#{deadPerson},</if>
             <if test="economic != null">#{economic},</if>
             <if test="remarks != null">#{remarks},</if>
             <if test="img != null">#{img},</if>
@@ -92,14 +92,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateOrEvent" parameterType="OrEvent">
         update or_event
         <trim prefix="SET" suffixOverrides=",">
-            <if test="type != null">type = #{type},</if>
-            <if test="specific != null">specific = #{specific},</if>
-            <if test="position != null">position = #{position},</if>
-            <if test="content != null">content = #{content},</if>
+            <if test="eventType != null">event_type = #{eventType},</if>
+            <if test="specificEvent != null">specific_event = #{specificEvent},</if>
+            <if test="eventPosition != null">event_position = #{eventPosition},</if>
+            <if test="eventContent != null">event_content = #{eventContent},</if>
             <if test="submissionTime != null">submission_time = #{submissionTime},</if>
             <if test="incidentTime != null">incident_time = #{incidentTime},</if>
-            <if test="injured != null">injured = #{injured},</if>
-            <if test="dead != null">dead = #{dead},</if>
+            <if test="injuredPerson != null">injured_person = #{injuredPerson},</if>
+            <if test="deadPerson != null">dead_person = #{deadPerson},</if>
             <if test="economic != null">economic = #{economic},</if>
             <if test="remarks != null">remarks = #{remarks},</if>
             <if test="img != null">img = #{img},</if>

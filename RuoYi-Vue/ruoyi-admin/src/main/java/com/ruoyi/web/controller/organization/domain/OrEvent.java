@@ -1,4 +1,4 @@
-package com.ruoyi.system.domain;
+package com.ruoyi.web.controller.organization.domain;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 应急事件对象 or_event
  * 
  * @author ruoyi
- * @date 2023-05-23
+ * @date 2023-05-25
  */
 public class OrEvent extends BaseEntity
 {
@@ -22,41 +22,41 @@ public class OrEvent extends BaseEntity
 
     /** 事件类型 */
     @Excel(name = "事件类型")
-    private String type;
+    private String eventType;
 
     /** 具体事件 */
     @Excel(name = "具体事件")
-    private String specific;
+    private String specificEvent;
 
-    /** 事件发生位置 */
-    @Excel(name = "事件发生位置")
-    private String position;
+    /** 发生位置 */
+    @Excel(name = "发生位置")
+    private String eventPosition;
 
     /** 事件内容 */
     @Excel(name = "事件内容")
-    private String content;
+    private String eventContent;
 
     /** 上报时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "上报时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date submissionTime;
 
-    /** 时间发生时间 */
+    /** 发生时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "时间发生时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "发生时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date incidentTime;
 
     /** 受伤人数 */
     @Excel(name = "受伤人数")
-    private Long injured;
+    private Long injuredPerson;
 
     /** 死亡人数 */
     @Excel(name = "死亡人数")
-    private Long dead;
+    private Long deadPerson;
 
     /** 经济损失 */
     @Excel(name = "经济损失")
-    private Long economic;
+    private Double economic;
 
     /** 备注 */
     @Excel(name = "备注")
@@ -66,12 +66,12 @@ public class OrEvent extends BaseEntity
     @Excel(name = "现场图片")
     private String img;
 
-    /** 状态 */
-    @Excel(name = "状态")
+    /** 事件状态 */
+    @Excel(name = "事件状态")
     private Long status;
 
-    /** 事件紧急程度 */
-    @Excel(name = "事件紧急程度")
+    /** 紧急程度 */
+    @Excel(name = "紧急程度")
     private String urgency;
 
     /** 影响范围 */
@@ -87,41 +87,41 @@ public class OrEvent extends BaseEntity
     {
         return id;
     }
-    public void setType(String type) 
+    public void setEventType(String eventType) 
     {
-        this.type = type;
+        this.eventType = eventType;
     }
 
-    public String getType() 
+    public String getEventType() 
     {
-        return type;
+        return eventType;
     }
-    public void setSpecific(String specific) 
+    public void setSpecificEvent(String specificEvent) 
     {
-        this.specific = specific;
-    }
-
-    public String getSpecific() 
-    {
-        return specific;
-    }
-    public void setPosition(String position) 
-    {
-        this.position = position;
+        this.specificEvent = specificEvent;
     }
 
-    public String getPosition() 
+    public String getSpecificEvent() 
     {
-        return position;
+        return specificEvent;
     }
-    public void setContent(String content) 
+    public void setEventPosition(String eventPosition) 
     {
-        this.content = content;
+        this.eventPosition = eventPosition;
     }
 
-    public String getContent() 
+    public String getEventPosition() 
     {
-        return content;
+        return eventPosition;
+    }
+    public void setEventContent(String eventContent) 
+    {
+        this.eventContent = eventContent;
+    }
+
+    public String getEventContent() 
+    {
+        return eventContent;
     }
     public void setSubmissionTime(Date submissionTime) 
     {
@@ -141,30 +141,30 @@ public class OrEvent extends BaseEntity
     {
         return incidentTime;
     }
-    public void setInjured(Long injured) 
+    public void setInjuredPerson(Long injuredPerson) 
     {
-        this.injured = injured;
+        this.injuredPerson = injuredPerson;
     }
 
-    public Long getInjured() 
+    public Long getInjuredPerson() 
     {
-        return injured;
+        return injuredPerson;
     }
-    public void setDead(Long dead) 
+    public void setDeadPerson(Long deadPerson) 
     {
-        this.dead = dead;
+        this.deadPerson = deadPerson;
     }
 
-    public Long getDead() 
+    public Long getDeadPerson() 
     {
-        return dead;
+        return deadPerson;
     }
-    public void setEconomic(Long economic) 
+    public void setEconomic(Double economic) 
     {
         this.economic = economic;
     }
 
-    public Long getEconomic() 
+    public Double getEconomic() 
     {
         return economic;
     }
@@ -218,14 +218,14 @@ public class OrEvent extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("type", getType())
-            .append("specific", getSpecific())
-            .append("position", getPosition())
-            .append("content", getContent())
+            .append("eventType", getEventType())
+            .append("specificEvent", getSpecificEvent())
+            .append("eventPosition", getEventPosition())
+            .append("eventContent", getEventContent())
             .append("submissionTime", getSubmissionTime())
             .append("incidentTime", getIncidentTime())
-            .append("injured", getInjured())
-            .append("dead", getDead())
+            .append("injuredPerson", getInjuredPerson())
+            .append("deadPerson", getDeadPerson())
             .append("economic", getEconomic())
             .append("remarks", getRemarks())
             .append("img", getImg())
