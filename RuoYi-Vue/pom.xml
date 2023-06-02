@@ -170,6 +170,20 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 决策模块-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-decision</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 物资保障模块-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-guarantee</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -180,6 +194,8 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-decision</module>
+        <module>ruoyi-guarantee</module>
     </modules>
     <packaging>pom</packaging>
 

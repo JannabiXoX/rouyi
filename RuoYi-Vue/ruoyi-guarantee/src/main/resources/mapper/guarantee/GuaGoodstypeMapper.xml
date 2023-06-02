@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.guarantee.mapper.GuaGoodstypeMapper">
+    
+    <resultMap type="GuaGoodstype" id="GuaGoodstypeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectGuaGoodstypeVo">
+        select id, name, remark from gua_goodstype
+    </sql>
+
+    <select id="selectGuaGoodstypeList" parameterType="GuaGoodstype" resultMap="GuaGoodstypeResult">
+        <include refid="selectGuaGoodstypeVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectGuaGoodstypeById" parameterType="Long" resultMap="GuaGoodstypeResult">
+        <include refid="selectGuaGoodstypeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGuaGoodstype" parameterType="GuaGoodstype">
+        insert into gua_goodstype
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGuaGoodstype" parameterType="GuaGoodstype">
+        update gua_goodstype
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGuaGoodstypeById" parameterType="Long">
+        delete from gua_goodstype where id = #{id}
+    </delete>
+
+    <delete id="deleteGuaGoodstypeByIds" parameterType="String">
+        delete from gua_goodstype where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.guarantee.mapper.GuaStorageMapper">
+    
+    <resultMap type="GuaStorage" id="GuaStorageResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectGuaStorageVo">
+        select id, name, remark from gua_storage
+    </sql>
+
+    <select id="selectGuaStorageList" parameterType="GuaStorage" resultMap="GuaStorageResult">
+        <include refid="selectGuaStorageVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectGuaStorageById" parameterType="Long" resultMap="GuaStorageResult">
+        <include refid="selectGuaStorageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGuaStorage" parameterType="GuaStorage">
+        insert into gua_storage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGuaStorage" parameterType="GuaStorage">
+        update gua_storage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGuaStorageById" parameterType="Long">
+        delete from gua_storage where id = #{id}
+    </delete>
+
+    <delete id="deleteGuaStorageByIds" parameterType="String">
+        delete from gua_storage where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

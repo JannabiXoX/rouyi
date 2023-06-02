@@ -61,6 +61,20 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
+        <!-- 决策模块-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-decision</artifactId>
+            <version>${ruoyi.version}</version>
+        </dependency>
+
+        <!-- 物资保障模块-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-guarantee</artifactId>
+            <version>${ruoyi.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

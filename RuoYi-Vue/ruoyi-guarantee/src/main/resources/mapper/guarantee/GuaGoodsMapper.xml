@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.guarantee.mapper.GuaGoodsMapper">
+    
+    <resultMap type="GuaGoods" id="GuaGoodsResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="storage"    column="storage"    />
+        <result property="goodsType"    column="goods_type"    />
+        <result property="count"    column="count"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectGuaGoodsVo">
+        select id, name, storage, goods_type, count, remark from gua_goods
+    </sql>
+
+    <select id="selectGuaGoodsList" parameterType="GuaGoods" resultMap="GuaGoodsResult">
+        <include refid="selectGuaGoodsVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="storage != null "> and storage = #{storage}</if>
+            <if test="goodsType != null "> and goods_type = #{goodsType}</if>
+            <if test="count != null "> and count = #{count}</if>
+        </where>
+    </select>
+    
+    <select id="selectGuaGoodsById" parameterType="Long" resultMap="GuaGoodsResult">
+        <include refid="selectGuaGoodsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGuaGoods" parameterType="GuaGoods">
+        insert into gua_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="storage != null">storage,</if>
+            <if test="goodsType != null">goods_type,</if>
+            <if test="count != null">count,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="storage != null">#{storage},</if>
+            <if test="goodsType != null">#{goodsType},</if>
+            <if test="count != null">#{count},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGuaGoods" parameterType="GuaGoods">
+        update gua_goods
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="storage != null">storage = #{storage},</if>
+            <if test="goodsType != null">goods_type = #{goodsType},</if>
+            <if test="count != null">count = #{count},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGuaGoodsById" parameterType="Long">
+        delete from gua_goods where id = #{id}
+    </delete>
+
+    <delete id="deleteGuaGoodsByIds" parameterType="String">
+        delete from gua_goods where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
