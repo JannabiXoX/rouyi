@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="货物分类名" prop="name">
+      <el-form-item label="货物分类名" prop="name" label-width="auto">
         <el-input
           v-model="queryParams.name"
           placeholder="请输入货物分类名"
@@ -63,7 +63,7 @@
 
     <el-table v-loading="loading" :data="goodstypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="货物类型id" align="center" prop="id" />
+      <el-table-column label="货物类型编码" align="center" prop="id" />
       <el-table-column label="货物分类名" align="center" prop="name" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -85,7 +85,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -97,10 +97,10 @@
     <!-- 添加或修改货物类型信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="货物分类名" prop="name">
+        <el-form-item label="货物分类名" prop="name" label-width="auto">
           <el-input v-model="form.name" placeholder="请输入货物分类名" />
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
+        <el-form-item label="备注" prop="remark" label-width="auto">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>

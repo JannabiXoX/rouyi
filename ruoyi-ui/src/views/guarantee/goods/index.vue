@@ -9,10 +9,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="仓库id" prop="storage">
+      <el-form-item label="仓库编码" prop="storage">
         <el-input
           v-model="queryParams.storage"
-          placeholder="请输入仓库id"
+          placeholder="请输入仓库编码"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -79,10 +79,10 @@
 
     <el-table v-loading="loading" :data="goodsList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="货物id" align="center" prop="id" />
+      <el-table-column label="货物编码" align="center" prop="id" />
       <el-table-column label="货物名称" align="center" prop="name" />
-      <el-table-column label="仓库id" align="center" prop="storage" />
-      <el-table-column label="货物分类id" align="center" prop="goodsType" />
+      <el-table-column label="仓库编码" align="center" prop="storage" />
+      <el-table-column label="货物分类编码" align="center" prop="goodsType" />
       <el-table-column label="货物数量" align="center" prop="count" />
       <el-table-column label="备注信息" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -104,7 +104,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"

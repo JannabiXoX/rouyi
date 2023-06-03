@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="物资id" prop="goods">
+      <el-form-item label="物资编码" prop="goods">
         <el-input
           v-model="queryParams.goods"
-          placeholder="请输入物资id"
+          placeholder="请输入物资编码"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="用户id" prop="userId">
+      <el-form-item label="用户编码" prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="请输入用户id"
+          placeholder="请输入用户编码"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -88,8 +88,8 @@
     <el-table v-loading="loading" :data="applyList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="序列" align="center" prop="id" />
-      <el-table-column label="物资id" align="center" prop="goods" />
-      <el-table-column label="用户id" align="center" prop="userId" />
+      <el-table-column label="物资编码" align="center" prop="goods" />
+      <el-table-column label="用户编码" align="center" prop="userId" />
       <el-table-column label="数量" align="center" prop="count" />
       <el-table-column label="地址" align="center" prop="address" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -111,7 +111,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
